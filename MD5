@@ -1,0 +1,16 @@
+45cb9bb617089729a4dc4f68b5bef34c *DESCRIPTION
+37c5442ab8c76701be9490122433842d *NAMESPACE
+f02407a7b3dba894fe57c11f2c1eb0a2 *R/batchmark.R
+3b2bca10552aec86b222ccbd5dc50f1a *R/helper.R
+b2bf78fad888982a0a6ed0a101992798 *R/reduceResultsBatchmark.R
+1f049bb09eb1c18655dd12fe3e8939c1 *R/worker.R
+08d36c8eb299f8c03956452d3c75d1ba *R/zzz.R
+075150c6aa496d593802cc2be109ca17 *README.md
+381562bf2cab5fbdc9ac8cacc9965eee *inst/WORDLIST
+ab8a8445f38e26a9c68a589e62b9c6f9 *man/batchmark.Rd
+b828e4e1207eef29a2c26f6b330196a5 *man/mlr3batchmark-package.Rd
+0c953353c72f61ca2acf619b188bcbee *man/reduceResultsBatchmark.Rd
+ca0bc0818a1bea9fe627f31279e16461 *tests/testthat.R
+760d23a70db2ee1ec7e44807aedcdad7 *tests/testthat/helper.R
+a9bc599a8b4a6ceb620c87c8bbc342ea *tests/testthat/test_batchmark.R
+9ad41de4b218a76c3917cc11289ff890 *tests/testthat/test_reduceResultsBatchmark.R
