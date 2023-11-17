@@ -20,7 +20,7 @@ reduceResultsBatchmark = function(ids = NULL, store_backends = TRUE, reg = batch
   } else {
     ids = batchtools::findJobs(ids = ids, reg = reg) # convert to proper table
     if (nrow(batchtools::findNotDone(ids, reg = reg))) {
-      stop("All jobs must be have been successfully computed")
+      stop("All jobs must have been successfully computed")
     }
   }
 
@@ -67,6 +67,8 @@ reduceResultsBatchmark = function(ids = NULL, store_backends = TRUE, reg = batch
       iteration = tab$repl,
       prediction = map(results, "prediction"),
       learner_state = map(results, "learner_state"),
+      param_values = map(results, "param_values"),
+      learner_hash = map_chr(results, "learner_hash"),
       uhash = tab$job.name
     ), store_backends = store_backends)
     bmr$combine(mlr3::BenchmarkResult$new(rdata))
