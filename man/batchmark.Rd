@@ -4,7 +4,12 @@
 \alias{batchmark}
 \title{Benchmark Experiments on Batch Systems}
 \usage{
-batchmark(design, store_models = FALSE, reg = batchtools::getDefaultRegistry())
+batchmark(
+  design,
+  store_models = FALSE,
+  reg = batchtools::getDefaultRegistry(),
+  renv_project = NULL
+)
 }
 \arguments{
 \item{design}{(\code{\link[=data.frame]{data.frame()}})\cr
@@ -20,9 +25,13 @@ Set to \code{TRUE} if you want to further analyse the models or want to
 extract information like variable importance.}
 
 \item{reg}{\link[batchtools:makeExperimentRegistry]{batchtools::ExperimentRegistry}.}
+
+\item{renv_project}{\code{character(1)}\cr
+Path to a renv project.
+If not \code{NULL}, the renv project is activated in the job environment.}
 }
 \value{
-\code{\link[=data.table]{data.table()}} with ids of created jobs (invisibly).
+\code{\link[data.table:data.table]{data.table::data.table()}} with ids of created jobs (invisibly).
 }
 \description{
 This function provides the functionality to leave the interface of \CRANpkg{mlr3} for the computation

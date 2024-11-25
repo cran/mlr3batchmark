@@ -1,8 +1,7 @@
 #' @title Collect Results from batchmark
 #'
 #' @description
-#' Collect the results from jobs defined via [batchmark()] and combine them into
-#' a [mlr3::BenchmarkResult].
+#' Collect the results from jobs defined via [batchmark()] and combine them into a [mlr3::BenchmarkResult].
 #'
 #' Note that `ids` defaults to finished jobs (as reported by [batchtools::findDone()]).
 #' If a job threw an error, is expired or is still running, it will be ignored with this default.
@@ -14,7 +13,8 @@
 #'
 #' @return [mlr3::BenchmarkResult].
 #' @export
-reduceResultsBatchmark = function(ids = NULL, store_backends = TRUE, reg = batchtools::getDefaultRegistry()) { # nolint
+reduceResultsBatchmark = function(ids = NULL, store_backends = TRUE, reg = batchtools::getDefaultRegistry(), fun = NULL, unmarshal = TRUE) { # nolint
+  assert_flag(unmarshal)
   if (is.null(ids)) {
     ids = batchtools::findDone(ids, reg = reg)
   } else {
@@ -28,6 +28,8 @@ reduceResultsBatchmark = function(ids = NULL, store_backends = TRUE, reg = batch
   tabs = unnest(tabs, c("prob.pars", "algo.pars"))
   tabs = split(tabs, by = "job.name")
   bmr = mlr3::BenchmarkResult$new()
+
+  version_checked = FALSE
 
   for (tab in tabs) {
     job = batchtools::makeJob(tab$job.id[1L], reg = reg)
@@ -59,7 +61,18 @@ reduceResultsBatchmark = function(ids = NULL, store_backends = TRUE, reg = batch
       learner = get_export(needle, reg)
     }
 
-    results = batchtools::reduceResultsList(tab$job.id, reg = reg)
+    results = batchtools::reduceResultsList(tab$job.id, reg = reg, fun = fun)
+
+    if (!version_checked) {
+      version_checked = TRUE
+      if (mlr3::mlr_reflections$package_version != results[[1]]$learner_state$mlr3_version) {
+        lg$warn(paste(sep = "\n",
+          "The mlr3 version (%s) from one of the trained learners differs from the currently loaded mlr3 version (%s).",
+          "This can lead to unexpected behavior and we recommend using the same versions of all mlr3 packages for collecting the results."),
+          results[[1]]$learner_state$mlr3_version, mlr3::mlr_reflections$package_version)
+      }
+    }
+
     rdata = mlr3::ResultData$new(data.table(
       task = list(task),
       learner = list(learner),
@@ -72,6 +85,10 @@ reduceResultsBatchmark = function(ids = NULL, store_backends = TRUE, reg = batch
       uhash = tab$job.name
     ), store_backends = store_backends)
     bmr$combine(mlr3::BenchmarkResult$new(rdata))
+  }
+
+  if (unmarshal) {
+    bmr$unmarshal()
   }
 
   return(bmr)

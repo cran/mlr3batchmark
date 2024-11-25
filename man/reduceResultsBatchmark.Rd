@@ -7,7 +7,9 @@
 reduceResultsBatchmark(
   ids = NULL,
   store_backends = TRUE,
-  reg = batchtools::getDefaultRegistry()
+  reg = batchtools::getDefaultRegistry(),
+  fun = NULL,
+  unmarshal = TRUE
 )
 }
 \arguments{
@@ -29,13 +31,21 @@ in a future release.}
 
 \item{reg}{[\code{\link[batchtools]{Registry}}]\cr
 Registry. If not explicitly passed, uses the default registry (see \code{\link[batchtools]{setDefaultRegistry}}).}
+
+\item{fun}{[\code{function}]\cr
+Function to apply to each result. The result is passed unnamed as first argument. If \code{NULL}, the identity is used.
+If the function has the formal argument \dQuote{job}, the \code{\link[batchtools]{Job}}/\code{\link[batchtools]{Experiment}} is also passed to the function.}
+
+\item{unmarshal}{\code{\link[mlr3]{Learner}}\cr
+Whether to unmarshal learners that were marshaled during the execution.
+If \code{TRUE} all models are stored in unmarshaled form.
+If \code{FALSE}, all learners (that need marshaling) are stored in marshaled form.}
 }
 \value{
 \link[mlr3:BenchmarkResult]{mlr3::BenchmarkResult}.
 }
 \description{
-Collect the results from jobs defined via \code{\link[=batchmark]{batchmark()}} and combine them into
-a \link[mlr3:BenchmarkResult]{mlr3::BenchmarkResult}.
+Collect the results from jobs defined via \code{\link[=batchmark]{batchmark()}} and combine them into a \link[mlr3:BenchmarkResult]{mlr3::BenchmarkResult}.
 
 Note that \code{ids} defaults to finished jobs (as reported by \code{\link[batchtools:findJobs]{batchtools::findDone()}}).
 If a job threw an error, is expired or is still running, it will be ignored with this default.
