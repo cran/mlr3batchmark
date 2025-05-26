@@ -1,6 +1,6 @@
 Package: mlr3batchmark
 Title: Batch Experiments for 'mlr3'
-Version: 0.2.0
+Version: 0.2.1
 Authors@R: c(
     person("Marc", "Becker", , "marcbecker@posteo.de", role = c("cre", "aut"),
            comment = c(ORCID = "0000-0002-8115-0400")),
@@ -22,10 +22,10 @@ Suggests: renv, rpart, testthat
 Encoding: UTF-8
 RoxygenNote: 7.3.2
 NeedsCompilation: no
-Packaged: 2024-11-25 09:43:40 UTC; marc
-Author: Marc Becker [cre, aut] (<https://orcid.org/0000-0002-8115-0400>),
-  Michel Lang [aut] (<https://orcid.org/0000-0001-9754-0393>),
-  Toby Hocking [ctb] (<https://orcid.org/0000-0002-3146-0865>)
+Packaged: 2025-05-26 07:29:05 UTC; marc
+Author: Marc Becker [cre, aut] (ORCID: <https://orcid.org/0000-0002-8115-0400>),
+  Michel Lang [aut] (ORCID: <https://orcid.org/0000-0001-9754-0393>),
+  Toby Hocking [ctb] (ORCID: <https://orcid.org/0000-0002-3146-0865>)
 Maintainer: Marc Becker <marcbecker@posteo.de>
 Repository: CRAN
-Date/Publication: 2024-11-25 10:00:02 UTC
+Date/Publication: 2025-05-26 09:20:02 UTC
